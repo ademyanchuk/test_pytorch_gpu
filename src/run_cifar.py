@@ -1,4 +1,5 @@
 import sys
+import os
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime
@@ -11,10 +12,17 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
+from .random import random_seed
+
+torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.enabled = True
+torch.use_deterministic_algorithms(True)
+
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+
 
 def main():
-
-    torch.backends.cudnn.enabled = True
+    random_seed()
 
     print(f"Using pytorch version: {torch.__version__}")
 
